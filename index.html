@@ -90,6 +90,7 @@
   .btn:focus-visible { outline:3px solid var(--brand-soft); outline-offset:2px; }
   .note { color:var(--muted); font-size:13px; margin:14px 0 0; display:flex; gap:8px; }
   #msg { margin-top:14px; padding:12px 14px; border-radius:10px; display:none; font-weight:600; }
+  #msg.info { display:block; background:var(--brand-soft); color:var(--brand-dark); }
   #msg.err { display:block; background:var(--dont-soft); color:var(--err); }
 
   /* ---------- thank you ---------- */
@@ -319,15 +320,35 @@
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMhOSQD2-EgrUbjFR13Yxu-7mOl--8bFu7aJejRphkXzlg_uGcLx1QC2fLRYKpWC5a/exec';
 
 var lang = 'en';
-function getIp() {   // public IP, looked up from the browser (Apps Script cannot see visitor IPs)
-  var ctl = new AbortController(), timer = setTimeout(function () { ctl.abort(); }, 4000);
-  return fetch('https://api.ipify.org?format=json', { signal: ctl.signal })
-    .then(function (r) { return r.json(); }).then(function (j) { return j.ip || 'unavailable'; })
-    .catch(function () { return 'unavailable'; }).then(function (ip) { clearTimeout(timer); return ip; });
+
+/* ---- visitor IP: looked up in the background as soon as the page opens (several providers, first answer wins) ---- */
+function fetchTimeout(url, ms) {
+  var ctl = new AbortController(), timer = setTimeout(function () { ctl.abort(); }, ms);
+  return fetch(url, { signal: ctl.signal, cache: 'no-store' }).then(function (r) { clearTimeout(timer); return r; }, function (e) { clearTimeout(timer); throw e; });
 }
+function firstOk(list) {
+  return new Promise(function (resolve, reject) {
+    var left = list.length;
+    list.forEach(function (p) {
+      p.then(function (v) { if (v && /^[0-9a-fA-F:.]{3,45}$/.test(v)) resolve(v); else if (--left === 0) reject(); },
+             function () { if (--left === 0) reject(); });
+    });
+  });
+}
+var ipPromise = firstOk([
+  fetchTimeout('https://api.ipify.org?format=json', 8000).then(function (r) { return r.json(); }).then(function (j) { return j.ip; }),
+  fetchTimeout('https://www.cloudflare.com/cdn-cgi/trace', 8000).then(function (r) { return r.text(); }).then(function (t) { var m = /^ip=(.+)$/m.exec(t); return m && m[1].trim(); }),
+  fetchTimeout('https://icanhazip.com', 8000).then(function (r) { return r.text(); }).then(function (t) { return t.trim(); })
+]).catch(function () { return 'unavailable'; });
+
+/* wake the Google script now, so the real submit does not hit a cold start */
+try { fetch(SCRIPT_URL, { mode: 'no-cors', cache: 'no-store' }).catch(function () {}); } catch (e) {}
+
 var T = {
-  en: { email:'Please enter a valid email', name:'Please enter your name', pos:'Please enter your position and unit', agree:'Please tick "I Agree"', sig:'Please sign in the box', fail:'Could not submit. Please try again.' },
-  ta: { email:'சரியான மின்னஞ்சலை உள்ளிடவும்', name:'உங்கள் பெயரை உள்ளிடவும்', pos:'உங்கள் பதவி மற்றும் பிரிவைக் குறிப்பிடவும்', agree:'"நான் ஒப்புக்கொள்கிறேன்" என்பதைத் தேர்வு செய்யவும்', sig:'பெட்டியில் கையொப்பமிடவும்', fail:'சமர்ப்பிக்க இயலவில்லை. மீண்டும் முயற்சிக்கவும்.' }
+  en: { email:'Please enter a valid email', name:'Please enter your name', pos:'Please enter your position and unit', agree:'Please tick "I Agree"', sig:'Please sign in the box',
+        wait:'Submitting… please wait and do not close this page.', retry:'Still working… trying again.', fail:'Could not submit. Please check your internet and try again.', busy:'Submitting…' },
+  ta: { email:'சரியான மின்னஞ்சலை உள்ளிடவும்', name:'உங்கள் பெயரை உள்ளிடவும்', pos:'உங்கள் பதவி மற்றும் பிரிவைக் குறிப்பிடவும்', agree:'"நான் ஒப்புக்கொள்கிறேன்" என்பதைத் தேர்வு செய்யவும்', sig:'பெட்டியில் கையொப்பமிடவும்',
+        wait:'சமர்ப்பிக்கப்படுகிறது… தயவுசெய்து காத்திருக்கவும், பக்கத்தை மூட வேண்டாம்.', retry:'இன்னும் செயலில் உள்ளது… மீண்டும் முயற்சிக்கப்படுகிறது.', fail:'சமர்ப்பிக்க இயலவில்லை. இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.', busy:'சமர்ப்பிக்கப்படுகிறது…' }
 };
 function setLang(l) {
   lang = l;
@@ -360,10 +381,28 @@ window.addEventListener('resize', sizeCanvas);
 setLang('en');
 sizeCanvas();
 
+/* smaller signature image (500px wide) = faster upload */
+function sigData() {
+  var w = 500, h = Math.max(1, Math.round(w * cv.height / cv.width)), o = document.createElement('canvas');
+  o.width = w; o.height = h;
+  var c = o.getContext('2d'); c.fillStyle = '#fff'; c.fillRect(0, 0, w, h); c.drawImage(cv, 0, 0, w, h);
+  return o.toDataURL('image/png');
+}
+
 function show(cls, text) { var m = document.getElementById('msg'); m.className = cls; m.textContent = text; }
 
+/* one id per submission: if a retry happens, the server ignores the duplicate */
+var sid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2));
+
+function postOnce(body) {
+  var ctl = new AbortController(), timer = setTimeout(function () { ctl.abort(); }, 45000);
+  // text/plain avoids a CORS preflight, which Apps Script web apps do not answer
+  return fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: body, signal: ctl.signal })
+    .then(function (r) { clearTimeout(timer); return r.json(); }, function (e) { clearTimeout(timer); throw e; });
+}
+
 document.getElementById('go').onclick = function () {
-  var t = T[lang], btn = this;
+  var t = T[lang], btn = this, label = btn.innerHTML;
   var email = document.getElementById('email').value.trim(), name = document.getElementById('name').value.trim(), pos = document.getElementById('pos').value.trim();
   if (!name) return show('err', t.name);
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return show('err', t.email);
@@ -373,23 +412,27 @@ document.getElementById('go').onclick = function () {
 
   var device = [navigator.platform, navigator.deviceMemory ? navigator.deviceMemory + 'GB RAM' : '', navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' cores' : '',
                 screen.width + 'x' + screen.height, navigator.language || '', (Intl.DateTimeFormat().resolvedOptions().timeZone || '')].filter(Boolean).join(' | ');
-  btn.disabled = true;
-  show('', '');
-  getIp().then(function (ip) {
-    // text/plain avoids a CORS preflight, which Apps Script web apps do not answer
-    return fetch(SCRIPT_URL, {
-      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ lang: lang.toUpperCase(), email: email, name: name, position: pos, agree: true,
-                             signature: cv.toDataURL('image/png'), device: device, browser: navigator.userAgent, ip: ip })
+  btn.disabled = true; btn.textContent = t.busy;
+  show('info', t.wait);
+  function reset() { btn.disabled = false; btn.innerHTML = label; }
+
+  // the IP lookup has been running since the page opened; wait for it at most 2.5 s
+  var ipWait = Promise.race([ipPromise, new Promise(function (res) { setTimeout(function () { res('unavailable'); }, 2500); })]);
+  ipWait.then(function (ip) {
+    var body = JSON.stringify({ sid: sid, lang: lang.toUpperCase(), email: email, name: name, position: pos, agree: true,
+                                signature: sigData(), device: device, browser: navigator.userAgent, ip: ip });
+    return postOnce(body).catch(function () {
+      show('info', t.retry);
+      return new Promise(function (res) { setTimeout(res, 1500); }).then(function () { return postOnce(body); });
     });
-  }).then(function (r) { return r.json(); }).then(function (j) {
-    if (j.ok) {
+  }).then(function (j) {
+    if (j && j.ok) {
       document.getElementById('f').style.display = 'none';
       document.getElementById('readCard').style.display = 'none';
       document.getElementById('done').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else { show('err', j.error || t.fail); btn.disabled = false; }
-  }).catch(function () { show('err', t.fail); btn.disabled = false; });
+    } else { show('err', (j && j.error) || t.fail); reset(); }
+  }).catch(function () { show('err', t.fail); reset(); });
 };
 </script>
 </body>
