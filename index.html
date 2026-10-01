@@ -389,6 +389,23 @@ function sigData() {
   return o.toDataURL('image/png');
 }
 
+/* the exact text the person saw (in their language), sent so the server can build the signed PDF */
+function collectDoc() {
+  var policy = [];
+  var pol = document.querySelector('.policy[data-l="' + lang + '"]');
+  if (pol) pol.querySelectorAll('h2,h3,p,li').forEach(function (el) {
+    var tx = (el.innerText || el.textContent || '').trim();
+    if (tx) policy.push({ t: el.tagName.toLowerCase(), x: tx.slice(0, 1500) });
+  });
+  var decl = [];
+  document.querySelectorAll('.decl p').forEach(function (p) {
+    if (getComputedStyle(p).display !== 'none') { var tx = p.textContent.trim(); if (tx) decl.push(tx.slice(0, 1500)); }
+  });
+  var title = document.querySelector('#readCard .card-title span[data-l="' + lang + '"]');
+  var agree = document.querySelector('.agree span span[data-l="' + lang + '"]');
+  return { title: title ? title.textContent.trim() : '', policy: policy, decl: decl, agree: agree ? agree.textContent.trim() : 'I Agree' };
+}
+
 function show(cls, text) { var m = document.getElementById('msg'); m.className = cls; m.textContent = text; }
 
 /* one id per submission: if a retry happens, the server ignores the duplicate */
@@ -420,7 +437,7 @@ document.getElementById('go').onclick = function () {
   var ipWait = Promise.race([ipPromise, new Promise(function (res) { setTimeout(function () { res('unavailable'); }, 2500); })]);
   ipWait.then(function (ip) {
     var body = JSON.stringify({ sid: sid, lang: lang.toUpperCase(), email: email, name: name, position: pos, agree: true,
-                                signature: sigData(), device: device, browser: navigator.userAgent, ip: ip });
+                                signature: sigData(), doc: collectDoc(), device: device, browser: navigator.userAgent, ip: ip });
     return postOnce(body).catch(function () {
       show('info', t.retry);
       return new Promise(function (res) { setTimeout(res, 1500); }).then(function () { return postOnce(body); });
