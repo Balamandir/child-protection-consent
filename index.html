@@ -3,62 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Child Protection Code of Conduct</title>
+<meta name="theme-color" content="#c8531a">
+<title>Child Protection Code of Conduct | Bala Mandir</title>
 <style>
-  :root { --bg:#fdf6e3; --card:#fff; --ink:#222; --muted:#666; --accent:#e8742a; --line:#ddd; --ok:#2e7d32; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#1d1b17; --card:#27241f; --ink:#eee; --muted:#aaa; --line:#444; } }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 'Nirmala UI','Latha',system-ui,sans-serif; }
-  .wrap { max-width:860px; margin:0 auto; padding:16px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:16px; }
-  h1 { font-size:22px; margin:0 0 4px; }
-  h2 { font-size:17px; margin:18px 0 6px; }
-  h3 { font-size:15px; margin:12px 0 4px; }
-  p, li { margin:4px 0; }
-  ul { padding-left:22px; margin:4px 0; }
-  .lang { display:flex; gap:8px; margin-bottom:12px; }
-  .lang button { flex:1; padding:12px; font-size:17px; border:2px solid var(--accent); background:transparent; color:var(--ink); border-radius:8px; cursor:pointer; }
-  .lang button.on { background:var(--accent); color:#fff; font-weight:600; }
-  .policy { max-height:420px; overflow:auto; border:1px solid var(--line); border-radius:8px; padding:6px 14px; }
-  label { display:block; font-weight:600; margin:10px 0 4px; }
-  input[type=text], input[type=email] { width:100%; padding:10px; font-size:16px; border:1px solid var(--line); border-radius:6px; background:transparent; color:var(--ink); }
-  .req { color:#d32f2f; }
-  .declbox { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
-  .declbox .left { border:1px solid var(--line); border-radius:8px; padding:12px 14px; }
-  .agree { display:flex; gap:10px; align-items:flex-start; font-weight:600; margin-top:10px; cursor:pointer; }
-  .agree input { width:22px; height:22px; margin-top:3px; flex:none; }
-  #sig { width:100%; height:200px; border:1px dashed #666; border-radius:6px; background:#fff; touch-action:none; cursor:crosshair; display:block; }
-  .btn { padding:12px 22px; font-size:16px; border:0; border-radius:8px; cursor:pointer; }
-  .btn-clear { background:#999; color:#fff; margin-top:8px; padding:8px 14px; font-size:14px; }
-  .btn-submit { background:var(--ok); color:#fff; width:100%; margin-top:16px; font-weight:600; }
-  .btn-submit:disabled { opacity:.6; cursor:wait; }
-  #msg { margin-top:12px; padding:10px 12px; border-radius:6px; display:none; }
-  #msg.err { display:block; background:#fdecea; color:#b71c1c; }
-  #msg.ok { display:block; background:#e8f5e9; color:#1b5e20; }
-  .note { color:var(--muted); font-size:13px; margin-top:10px; }
+  :root {
+    --bg:#f6f1e9; --card:#ffffff; --ink:#26221d; --muted:#6b645b; --line:#e6dfd3;
+    --brand:#c8531a; --brand-dark:#a24012; --brand-soft:#fbeadf;
+    --do:#2e7d4f; --do-soft:#e8f4ec; --dont:#b3372f; --dont-soft:#fbeceb;
+    --ok:#2e7d4f; --err:#b3372f; --shadow:0 1px 2px rgba(40,25,10,.06), 0 8px 24px rgba(40,25,10,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#17150f; --card:#221f19; --ink:#f1ece3; --muted:#a79f92; --line:#3a352c;
+      --brand:#ec7a3c; --brand-dark:#f08d55; --brand-soft:#3a2a1f;
+      --do:#5cc189; --do-soft:#1f3328; --dont:#ee7b72; --dont-soft:#3a2321;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.65 'Segoe UI','Nirmala UI','Noto Sans Tamil',system-ui,-apple-system,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:var(--brand-dark); }
+
+  /* ---------- header ---------- */
+  .hero { background:linear-gradient(135deg,#c8531a 0%,#e8742a 60%,#f2994f 100%); color:#fff; padding:28px 16px 64px; }
+  .hero-in { max-width:880px; margin:0 auto; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:22px; }
+  .org { font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; opacity:.92; }
+  .seg { display:inline-flex; background:rgba(255,255,255,.18); border-radius:999px; padding:3px; }
+  .seg button { border:0; background:transparent; color:#fff; font:inherit; font-size:14px; font-weight:600; padding:7px 18px; border-radius:999px; cursor:pointer; transition:background .15s,color .15s; }
+  .seg button.on { background:#fff; color:var(--brand-dark); }
+  .seg button:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+  .hero h1 { font-size:clamp(22px,4.2vw,32px); line-height:1.25; margin:0 0 8px; font-weight:700; }
+  .hero p { margin:0; opacity:.95; max-width:60ch; }
+  .steps { display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+  .step { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.16); border-radius:999px; padding:5px 14px 5px 6px; font-size:13.5px; font-weight:600; }
+  .step b { display:grid; place-items:center; width:22px; height:22px; border-radius:50%; background:#fff; color:var(--brand-dark); font-size:12px; }
+
+  /* ---------- layout ---------- */
+  .wrap { max-width:880px; margin:-40px auto 40px; padding:0 16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px 24px; margin-bottom:18px; box-shadow:var(--shadow); }
+  .card-title { display:flex; align-items:center; gap:10px; font-size:18px; font-weight:700; margin:0 0 4px; }
+  .card-title i { font-style:normal; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--brand-soft); color:var(--brand-dark); font-size:14px; }
+  .sub { color:var(--muted); font-size:14px; margin:0 0 14px; }
+
+  /* ---------- policy ---------- */
+  .policy { max-height:460px; overflow:auto; border:1px solid var(--line); border-radius:12px; padding:6px 18px 14px; background:var(--card); scrollbar-width:thin; }
+  .policy h2 { font-size:15px; margin:20px 0 6px; padding:8px 12px; border-radius:8px; font-weight:700; }
+  .policy h2.do { background:var(--do-soft); color:var(--do); }
+  .policy h2.dont { background:var(--dont-soft); color:var(--dont); }
+  .policy h2.acc { background:var(--brand-soft); color:var(--brand-dark); }
+  .policy h3 { font-size:15px; margin:14px 0 2px; }
+  .policy p, .policy li { margin:4px 0; }
+  .policy ul { padding-left:22px; margin:4px 0; }
+  .policy li::marker { color:var(--brand); }
+  .officer { margin-top:14px; padding:12px 14px; border-radius:10px; background:var(--brand-soft); }
+  .scrollhint { font-size:12.5px; color:var(--muted); margin:8px 2px 0; }
+
+  /* ---------- form ---------- */
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field { margin-bottom:14px; }
+  label.lbl { display:block; font-weight:600; font-size:14px; margin:0 0 5px; }
+  .req { color:var(--err); }
+  input[type=text], input[type=email] { width:100%; padding:12px 14px; font:inherit; color:var(--ink); background:transparent; border:1.5px solid var(--line); border-radius:10px; transition:border-color .15s, box-shadow .15s; }
+  input[type=text]:focus, input[type=email]:focus { outline:none; border-color:var(--brand); box-shadow:0 0 0 4px var(--brand-soft); }
+  input::placeholder { color:var(--muted); opacity:.75; }
+  .hint { font-size:12.5px; color:var(--muted); margin-top:4px; }
+
+  .declbox { display:grid; grid-template-columns:1.1fr 1fr; gap:18px; align-items:start; margin-top:6px; }
+  .decl { background:var(--brand-soft); border-radius:12px; padding:14px 16px; }
+  .decl p { margin:0 0 10px; font-size:15px; }
+  .agree { display:flex; gap:12px; align-items:center; font-weight:700; margin-top:12px; padding:12px 14px; background:var(--card); border:1.5px solid var(--line); border-radius:10px; cursor:pointer; }
+  .agree input { width:22px; height:22px; flex:none; accent-color:var(--brand); }
+  .agree:has(input:checked) { border-color:var(--ok); }
+  .sigwrap { background:var(--card); border:1.5px solid var(--line); border-radius:12px; padding:12px; }
+  #sig { width:100%; height:190px; border:2px dashed #b9ad9a; border-radius:8px; background:#fff; touch-action:none; cursor:crosshair; display:block; }
+  .sigbar { display:flex; justify-content:space-between; align-items:center; margin-top:8px; gap:8px; }
+  .sigbar small { color:var(--muted); font-size:12.5px; }
+  .btn { font:inherit; border:0; border-radius:10px; cursor:pointer; font-weight:700; }
+  .btn-clear { background:transparent; color:var(--brand-dark); border:1.5px solid var(--line); padding:6px 14px; font-size:13.5px; }
+  .btn-clear:hover { border-color:var(--brand); }
+  .btn-submit { width:100%; margin-top:18px; padding:15px; font-size:17px; background:var(--brand); color:#fff; box-shadow:0 6px 16px rgba(200,83,26,.28); transition:background .15s, transform .05s; }
+  .btn-submit:hover { background:var(--brand-dark); }
+  .btn-submit:active { transform:translateY(1px); }
+  .btn-submit:disabled { opacity:.65; cursor:wait; }
+  .btn:focus-visible { outline:3px solid var(--brand-soft); outline-offset:2px; }
+  .note { color:var(--muted); font-size:13px; margin:14px 0 0; display:flex; gap:8px; }
+  #msg { margin-top:14px; padding:12px 14px; border-radius:10px; display:none; font-weight:600; }
+  #msg.err { display:block; background:var(--dont-soft); color:var(--err); }
+
+  /* ---------- thank you ---------- */
+  #done { display:none; text-align:center; padding:44px 24px; }
+  #done .tick { width:72px; height:72px; margin:0 auto 14px; border-radius:50%; background:var(--do-soft); color:var(--ok); display:grid; place-items:center; font-size:38px; }
+  #done h2 { margin:0 0 6px; font-size:22px; }
+  #done p { margin:0; color:var(--muted); }
+
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:0 16px 32px; }
+
+  /* ---------- language switching ---------- */
   [data-l] { display:none; }
   body.en [data-l=en], body.ta [data-l=ta] { display:revert; }
   body.en span[data-l=en], body.ta span[data-l=ta] { display:inline; }
-  @media (max-width:700px) { .declbox { grid-template-columns:1fr; } .card { padding:14px; } }
+
+  @media (max-width:700px) {
+    .hero { padding:20px 14px 60px; }
+    .card { padding:16px 14px; border-radius:14px; }
+    .grid2, .declbox { grid-template-columns:1fr; }
+    .policy { max-height:380px; padding:4px 12px 12px; }
+    #sig { height:170px; }
+  }
 </style>
 </head>
 <body class="en">
-<div class="wrap">
 
-  <div class="lang" role="tablist">
-    <button type="button" id="bEn" class="on" onclick="setLang('en')">English</button>
-    <button type="button" id="bTa" onclick="setLang('ta')">தமிழ்</button>
+<header class="hero">
+  <div class="hero-in">
+    <div class="topbar">
+      <div class="org">Bala Mandir Kamaraj Trust</div>
+      <div class="seg" role="group" aria-label="Language">
+        <button type="button" id="bEn" class="on" onclick="setLang('en')">English</button>
+        <button type="button" id="bTa" onclick="setLang('ta')">தமிழ்</button>
+      </div>
+    </div>
+    <h1 data-l="en">Child Protection Code of Conduct</h1>
+    <h1 data-l="ta">குழந்தை பாதுகாப்பு நடத்தை விதிகள்</h1>
+    <p data-l="en">Please read the code of conduct below, then fill in your details, tick the declaration and sign.</p>
+    <p data-l="ta">கீழே உள்ள நடத்தை விதிகளைப் படித்து, உங்கள் விவரங்களை நிரப்பி, உறுதிமொழியை ஏற்று, கையொப்பமிடவும்.</p>
+    <div class="steps">
+      <span class="step"><b>1</b><span data-l="en">Read</span><span data-l="ta">படிக்கவும்</span></span>
+      <span class="step"><b>2</b><span data-l="en">Your details</span><span data-l="ta">விவரங்கள்</span></span>
+      <span class="step"><b>3</b><span data-l="en">Sign &amp; submit</span><span data-l="ta">கையொப்பம் &amp; சமர்ப்பிப்பு</span></span>
+    </div>
   </div>
+</header>
 
-  <div class="card">
-    <h1 data-l="en">Annexure I: Child Protection Code of Conduct for Staff and Volunteers</h1>
-    <h1 data-l="ta">இணைப்பு I: ஊழியர்கள் மற்றும் தன்னார்வலர்களுக்கான குழந்தை பாதுகாப்பு நடத்தை விதிகள்</h1>
+<main class="wrap">
+
+  <section class="card" id="readCard">
+    <h2 class="card-title"><i>1</i>
+      <span data-l="en">Annexure I: Child Protection Code of Conduct for Staff and Volunteers</span>
+      <span data-l="ta">இணைப்பு I: ஊழியர்கள் மற்றும் தன்னார்வலர்களுக்கான குழந்தை பாதுகாப்பு நடத்தை விதிகள்</span>
+    </h2>
+    <p class="sub"><span data-l="en">Scroll through the full text before you sign.</span><span data-l="ta">கையொப்பமிடும் முன் முழு உரையையும் படிக்கவும்.</span></p>
 
     <!-- ENGLISH POLICY -->
-    <div class="policy" data-l="en">
+    <div class="policy" data-l="en" tabindex="0" aria-label="Code of conduct text">
       <p>This Code of Conduct applies to all staff, members, volunteers, interns, contractors, and visitors at Bala Mandir across its units (Children’s Homes, Schools, Madhuram Narayanan Centre, BMRRC, and Kinship Care Programme). It is designed to ensure respectful, safe, and child-centred interactions.</p>
 
-      <h2>A. Do’s (Expected Behaviour)</h2>
+      <h2 class="do">A. Do’s (Expected Behaviour)</h2>
       <h3>1. Respect and Care</h3>
       <ul><li>Treat every child with dignity, fairness, and kindness, irrespective of gender, age, caste, religion, ability, or background.</li>
           <li>Use positive language, encouragement, and constructive feedback.</li></ul>
@@ -76,7 +168,7 @@
       <ul><li>Use only official Bala Mandir platforms for virtual interactions.</li>
           <li>Ensure online sessions are supervised, child-safe, and time-limited.</li></ul>
 
-      <h2>B. Don’ts (Prohibited Behaviour)</h2>
+      <h2 class="dont">B. Don’ts (Prohibited Behaviour)</h2>
       <h3>1. Physical Contact</h3>
       <ul><li>Do not hit, shake, or physically punish a child.</li>
           <li>Do not engage in inappropriate touching, hugging, or holding children in ways that could be misinterpreted.</li></ul>
@@ -97,19 +189,22 @@
           <li>Do not involve children in personal, religious, or political activities.</li>
           <li>Staff should not use children for running their personal errands such as washing their clothes, buying food from outside, washing their utensils etc for example.</li></ul>
 
-      <h2>C. Accountability</h2>
+      <h2 class="acc">C. Accountability</h2>
       <p>Breach of this Code of Conduct will lead to disciplinary action, which may include removal from duty, termination from employment, closure of contract, and/or legal or other disciplinary action in line with the POCSO Act and Juvenile Justice Act.</p>
       <p>All staff and volunteers must sign this Code of Conduct before commencing work at Bala Mandir.</p>
-      <p><b>Child Protection Officer:</b> Dr. Bindu</p>
-      <p><a href="https://balamandir.org/site/child-protection-policy/" target="_blank" rel="noopener">[Read the Bala Mandir Child Protection Policy]</a></p>
-      <p>If you have any concerns, observations, or information relating to the safety, protection or well-being of a child, please report them to the Child Protection Officer through: Email: <a href="mailto:pocso@balamandir.org">pocso@balamandir.org</a></p>
+      <div class="officer">
+        <p><b>Child Protection Officer:</b> Dr. Bindu</p>
+        <p><a href="https://balamandir.org/site/child-protection-policy/" target="_blank" rel="noopener">[Read the Bala Mandir Child Protection Policy]</a></p>
+        <p>If you have any concerns, observations, or information relating to the safety, protection or well-being of a child, please report them to the Child Protection Officer through: Email: <a href="mailto:pocso@balamandir.org">pocso@balamandir.org</a></p>
+      </div>
     </div>
 
     <!-- TAMIL POLICY -->
-    <div class="policy" data-l="ta">
-      <p>இந்த விதிகள் பால மந்திரில் உள்ள அனைத்து ஊழியர்கள், தன்னார்வலர்கள், பயிற்சியாளர்கள், ஒப்பந்ததாரர்கள் மற்றும் பார்வையாளர்களுக்கு அதன் பிரிவுகளில் (குழந்தைகள் இல்லங்கள், பள்ளிகள், மதுரம் நாராயணன் மையம், BMRRC, மற்றும் உறவினர் பராமரிப்பு திட்டம்) பொருந்தும். இது மரியாதைக்குரிய, பாதுகாப்பான மற்றும் குழந்தை மையப்படுத்தப்பட்ட தொடர்புகளை உறுதி செய்வதற்காக வடிவமைக்கப்பட்டுள்ளது.</p>
+    <div class="policy" data-l="ta" tabindex="0" aria-label="நடத்தை விதிகள்" lang="ta">
+      <!-- "உறுப்பினர்கள்" (members) added to match the English intro: please have a Tamil reader confirm -->
+      <p>இந்த விதிகள் பால மந்திரில் உள்ள அனைத்து ஊழியர்கள், உறுப்பினர்கள், தன்னார்வலர்கள், பயிற்சியாளர்கள், ஒப்பந்ததாரர்கள் மற்றும் பார்வையாளர்களுக்கு அதன் பிரிவுகளில் (குழந்தைகள் இல்லங்கள், பள்ளிகள், மதுரம் நாராயணன் மையம், BMRRC, மற்றும் உறவினர் பராமரிப்பு திட்டம்) பொருந்தும். இது மரியாதைக்குரிய, பாதுகாப்பான மற்றும் குழந்தை மையப்படுத்தப்பட்ட தொடர்புகளை உறுதி செய்வதற்காக வடிவமைக்கப்பட்டுள்ளது.</p>
 
-      <h2>அ. செய்ய வேண்டியவை (எதிர்பார்க்கப்படும் நடத்தை)</h2>
+      <h2 class="do">அ. செய்ய வேண்டியவை (எதிர்பார்க்கப்படும் நடத்தை)</h2>
       <h3>1. மரியாதை மற்றும் பராமரிப்பு</h3>
       <ul><li>பாலினம், வயது, சாதி, மதம், திறன் அல்லது பின்னணி ஆகியவற்றைப் பொருட்படுத்தாமல் ஒவ்வொரு குழந்தையையும் கண்ணியம், நியாயம் மற்றும் கருணையுடன் நடத்துங்கள்.</li>
           <li>நேர்மறையான மொழி, ஊக்கம் மற்றும் ஆக்கபூர்வமான கருத்துக்களைப் பயன்படுத்தவும்.</li></ul>
@@ -127,7 +222,7 @@
       <ul><li>மெய்நிகர் தொடர்புகளுக்கு அதிகாரப்பூர்வ பால மந்திரத் தளங்களை மட்டுமே பயன்படுத்தவும்.</li>
           <li>ஆன்லைன் அமர்வுகள் கண்காணிக்கப்படுகின்றன, குழந்தைகளுக்குப் பாதுகாப்பானவை மற்றும் நேர வரம்புக்குட்பட்டவை என்பதை உறுதிசெய்யவும்.</li></ul>
 
-      <h2>ஆ. செய்யக்கூடாதவை (தடைசெய்யப்பட்ட நடத்தை)</h2>
+      <h2 class="dont">ஆ. செய்யக்கூடாதவை (தடைசெய்யப்பட்ட நடத்தை)</h2>
       <h3>1. உடல் தொடர்பு</h3>
       <ul><li>ஒரு குழந்தையை அடிக்கவோ, அசைக்கவோ அல்லது உடல் ரீதியாக தண்டிக்கவோ கூடாது.</li>
           <li>தவறாகப் புரிந்துகொள்ளக்கூடிய வழிகளில் குழந்தைகளை தகாத முறையில் தொடுதல், கட்டிப்பிடித்தல் அல்லது பிடித்துக் கொள்ளாதீர்கள்.</li></ul>
@@ -144,32 +239,48 @@
       <ul><li>குழந்தைகளுடன் தனிப்பட்ட தொலைபேசி எண்கள், சமூக ஊடகங்கள் அல்லது தனிப்பட்ட செய்திகளைப் பகிர்ந்து கொள்ள வேண்டாம்.</li>
           <li>முன் ஒப்புதல் இல்லாமல் குழந்தைகளின் புகைப்படங்கள், ஆடியோ அல்லது வீடியோ பதிவுகளை எடுக்க வேண்டாம் (பெற்றோர்/பாதுகாவலர் மற்றும் அமைப்பு).</li></ul>
       <h3>6. நலன் முரண்பாடு</h3>
-      <ul><li>குழந்தைகள் அல்லது குடும்பங்களிடமிருந்து பரிசுகள், பணம் அல்லது சலுகைகளை ஏற்க வேண்டாம்.</li>
+      <ul><!-- English now says "give or accept" gifts. Tamil updated to match: DRAFT, please have a Tamil reader confirm -->
+          <li>குழந்தைகள் அல்லது குடும்பங்களுக்குப் பரிசுகள், பணம் அல்லது சலுகைகளை வழங்கவோ, அவர்களிடமிருந்து ஏற்கவோ வேண்டாம்.</li>
           <li>தனிப்பட்ட, மத அல்லது அரசியல் நடவடிக்கைகளில் குழந்தைகளை ஈடுபடுத்த வேண்டாம்.</li>
           <li>ஊழியர்கள் தங்கள் துணிகளைத் துவைத்தல், வெளியில் இருந்து உணவு வாங்குதல், பாத்திரங்களை கழுவுதல் போன்ற தனிப்பட்ட வேலைகளைச் செய்ய குழந்தைகளைப் பயன்படுத்தக்கூடாது.</li></ul>
 
-      <h2>இ. பொறுப்புடைமை</h2>
+      <h2 class="acc">இ. பொறுப்புடைமை</h2>
       <p>இந்த நடத்தை விதியை மீறுவது ஒழுங்கு நடவடிக்கைக்கு வழிவகுக்கும், இதில் பணியிலிருந்து நீக்குதல், வேலையிலிருந்து பணிநீக்கம், ஒப்பந்தத்தை மூடுவது மற்றும்/அல்லது போக்சோ சட்டம் மற்றும் சிறார் நீதிச் சட்டத்தின்படியான சட்ட அல்லது பிற ஒழுங்கு நடவடிக்கை ஆகியவை அடங்கும்.</p>
       <p>அனைத்து ஊழியர்களும் தன்னார்வலர்களும் பால மந்திரில் பணியைத் தொடங்குவதற்கு முன் இந்த நடத்தை விதிகளில் கையெழுத்திட வேண்டும்.</p>
-      <p><b>குழந்தைகள் பாதுகாப்பு அலுவலர்:</b> டாக்டர் பிந்து</p>
-      <p><a href="https://balamandir.org/site/child-protection-policy/" target="_blank" rel="noopener">[பாலா மந்திர் குழந்தைகள் பாதுகாப்புக் கொள்கையைப் படிக்க இங்கே கிளிக் செய்யவும்]</a></p>
-      <p>குழந்தையின் பாதுகாப்பு, பாதுகாப்பு உரிமைகள் அல்லது நல்வாழ்வு தொடர்பாக ஏதேனும் கவலை, சந்தேகம், நிகழ்வு அல்லது தகவல் இருந்தால், கீழ்கண்ட மின்னஞ்சல் முகவரி மூலம் குழந்தைகள் பாதுகாப்பு அலுவலரிடம் தெரிவிக்கவும்: மின்னஞ்சல்: <a href="mailto:pocso@balamandir.org">pocso@balamandir.org</a></p>
+      <div class="officer">
+        <p><b>குழந்தைகள் பாதுகாப்பு அலுவலர்:</b> டாக்டர் பிந்து</p>
+        <p><a href="https://balamandir.org/site/child-protection-policy/" target="_blank" rel="noopener">[பாலா மந்திர் குழந்தைகள் பாதுகாப்புக் கொள்கையைப் படிக்க இங்கே கிளிக் செய்யவும்]</a></p>
+        <p>குழந்தையின் பாதுகாப்பு, பாதுகாப்பு உரிமைகள் அல்லது நல்வாழ்வு தொடர்பாக ஏதேனும் கவலை, சந்தேகம், நிகழ்வு அல்லது தகவல் இருந்தால், கீழ்கண்ட மின்னஞ்சல் முகவரி மூலம் குழந்தைகள் பாதுகாப்பு அலுவலரிடம் தெரிவிக்கவும்: மின்னஞ்சல்: <a href="mailto:pocso@balamandir.org">pocso@balamandir.org</a></p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <form class="card" id="f" onsubmit="return false">
-    <label for="email"><span data-l="en">Email</span><span data-l="ta">மின்னஞ்சல்</span> <span class="req">*</span></label>
-    <input type="email" id="email" autocomplete="email" maxlength="150">
+  <form class="card" id="f" onsubmit="return false" novalidate>
+    <h2 class="card-title"><i>2</i><span data-l="en">Your details</span><span data-l="ta">உங்கள் விவரங்கள்</span></h2>
+    <p class="sub"><span data-l="en">Fields marked * are required.</span><span data-l="ta">* குறியிட்ட புலங்கள் கட்டாயம்.</span></p>
 
-    <label for="name"><span data-l="en">Name</span><span data-l="ta">பெயர்</span> <span class="req">*</span></label>
-    <input type="text" id="name" autocomplete="name" maxlength="150">
+    <div class="grid2">
+      <div class="field">
+        <label class="lbl" for="name"><span data-l="en">Name</span><span data-l="ta">பெயர்</span> <span class="req">*</span></label>
+        <input type="text" id="name" autocomplete="name" maxlength="150">
+      </div>
+      <div class="field">
+        <label class="lbl" for="email"><span data-l="en">Email</span><span data-l="ta">மின்னஞ்சல்</span> <span class="req">*</span></label>
+        <input type="email" id="email" autocomplete="email" maxlength="150" inputmode="email">
+      </div>
+    </div>
 
-    <label for="pos"><span data-l="en">Position - Member/Volunteer(Unit Name)</span><span data-l="ta">பதவி – உறுப்பினர் / தன்னார்வலர்</span> <span class="req">*</span></label>
-    <input type="text" id="pos" maxlength="100">
+    <div class="field">
+      <label class="lbl" for="pos">
+        <span data-l="en">Position – Member / Volunteer (Unit Name)</span>
+        <span data-l="ta">பதவி – உறுப்பினர் / தன்னார்வலர் (பிரிவு பெயர்)</span> <span class="req">*</span></label>
+      <input type="text" id="pos" maxlength="100"
+             data-ph-en="e.g. Volunteer – Children’s Home" data-ph-ta="எ.கா. தன்னார்வலர் – குழந்தைகள் இல்லம்">
+    </div>
 
-    <h2 data-l="en">Declaration</h2><h2 data-l="ta">உறுதிமொழி</h2>
+    <h2 class="card-title" style="margin-top:22px"><i>3</i><span data-l="en">Declaration &amp; signature</span><span data-l="ta">உறுதிமொழி &amp; கையொப்பம்</span></h2>
     <div class="declbox">
-      <div class="left">
+      <div class="decl">
         <p data-l="en">I hereby declare that I have read, understood, and agree to abide by the Bala Mandir Kamaraj Trust Child Protection Code of Conduct. I understand my responsibility to ensure the safety, dignity, protection, and well-being of every child under the care of the organization.</p>
         <p data-l="ta">பாலா மந்திர் காமராஜ் அறக்கட்டளையின் குழந்தைகள் பாதுகாப்பு நடத்தை விதிமுறைகளை நான் படித்து, புரிந்துகொண்டு, அவற்றைக் கடைப்பிடிக்க ஒப்புக்கொள்கிறேன் என்று இதன்மூலம் உறுதியளிக்கிறேன். நிறுவனத்தின் பராமரிப்பில் உள்ள ஒவ்வொரு குழந்தையின் பாதுகாப்பு, கண்ணியம், பாதுகாப்பு உரிமைகள் மற்றும் நல்வாழ்வை உறுதி செய்வது எனது பொறுப்பு என்பதை நான் புரிந்துகொள்கிறேன்.</p>
         <p data-l="en">I agree to report any suspected or actual child protection concern promptly through the designated reporting mechanism and understand that no individual is exempt from Bala Mandir's child protection requirements on account of seniority, position or voluntary status.</p>
@@ -177,24 +288,34 @@
         <p data-l="ta">குழந்தைப் பாதுகாப்பு தொடர்பான சந்தேகத்திற்குரிய அல்லது உண்மையான எந்தவொரு கவலையையும் நியமிக்கப்பட்ட புகார் அளிக்கும் வழிமுறை மூலம் உடனடியாகத் தெரிவிக்க ஒப்புக்கொள்கிறேன். மேலும், மூத்த நிலை, பதவி அல்லது தன்னார்வப் பணி என்ற காரணத்தால் எவரும் பால மந்திரின் குழந்தைகள் பாதுகாப்புத் தேவைகளிலிருந்து விலக்கு பெற்றவர் அல்லர் என்பதையும் புரிந்துகொள்கிறேன்.</p>
         <label class="agree"><input type="checkbox" id="agree"><span><span data-l="en">I Agree</span><span data-l="ta">நான் ஒப்புக்கொள்கிறேன்</span> <span class="req">*</span></span></label>
       </div>
-      <div>
-        <label style="margin-top:0"><span data-l="en">Signature</span><span data-l="ta">கையொப்பம்</span> <span class="req">*</span>
-          <small style="font-weight:400;color:var(--muted)"> — <span data-l="en">sign inside the box</span><span data-l="ta">பெட்டிக்குள் கையொப்பமிடவும்</span></small></label>
-        <canvas id="sig"></canvas>
-        <button type="button" class="btn btn-clear" id="clr"><span data-l="en">Clear</span><span data-l="ta">அழி</span></button>
+      <div class="sigwrap">
+        <label class="lbl" style="margin-top:0"><span data-l="en">Signature</span><span data-l="ta">கையொப்பம்</span> <span class="req">*</span></label>
+        <canvas id="sig" aria-label="Signature pad"></canvas>
+        <div class="sigbar">
+          <small><span data-l="en">Sign inside the box with your finger or mouse</span><span data-l="ta">விரல் அல்லது மவுஸால் பெட்டிக்குள் கையொப்பமிடவும்</span></small>
+          <button type="button" class="btn btn-clear" id="clr"><span data-l="en">Clear</span><span data-l="ta">அழி</span></button>
+        </div>
       </div>
     </div>
 
-    <p class="note"><span data-l="en">When you submit, your IP address, browser/device details and the date and time are recorded along with your signature.</span>
-      <span data-l="ta">சமர்ப்பிக்கும்போது உங்கள் IP முகவரி, உலாவி/சாதன விவரங்கள் மற்றும் தேதி, நேரம் ஆகியவை உங்கள் கையொப்பத்துடன் பதிவு செய்யப்படும்.</span></p>
+    <p class="note"><span>🔒</span><span><span data-l="en">When you submit, your IP address, browser/device details and the date and time are recorded along with your signature.</span>
+      <span data-l="ta">சமர்ப்பிக்கும்போது உங்கள் IP முகவரி, உலாவி/சாதன விவரங்கள் மற்றும் தேதி, நேரம் ஆகியவை உங்கள் கையொப்பத்துடன் பதிவு செய்யப்படும்.</span></span></p>
 
-    <div id="msg"></div>
+    <div id="msg" role="alert"></div>
     <button type="button" class="btn btn-submit" id="go"><span data-l="en">Submit</span><span data-l="ta">சமர்ப்பிக்கவும்</span></button>
   </form>
-</div>
+
+  <section class="card" id="done" role="status">
+    <div class="tick">✓</div>
+    <h2><span data-l="en">Thank you</span><span data-l="ta">நன்றி</span></h2>
+    <p><span data-l="en">Your acknowledgement has been submitted. You can close this page.</span><span data-l="ta">உங்கள் உறுதிமொழி சமர்ப்பிக்கப்பட்டது. இந்தப் பக்கத்தை மூடலாம்.</span></p>
+  </section>
+</main>
+
+<footer>Bala Mandir Kamaraj Trust &middot; <a href="mailto:pocso@balamandir.org">pocso@balamandir.org</a></footer>
 
 <script>
-/* Paste the Apps Script Web app URL (ends with /exec) here */
+/* Apps Script Web app URL (ends with /exec). Do not change unless the script is redeployed. */
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMhOSQD2-EgrUbjFR13Yxu-7mOl--8bFu7aJejRphkXzlg_uGcLx1QC2fLRYKpWC5a/exec';
 
 var lang = 'en';
@@ -205,8 +326,8 @@ function getIp() {   // public IP, looked up from the browser (Apps Script canno
     .catch(function () { return 'unavailable'; }).then(function (ip) { clearTimeout(timer); return ip; });
 }
 var T = {
-  en: { email:'Please enter a valid email', name:'Please enter your name', pos:'Please enter your position', agree:'Please tick "I Agree"', sig:'Please sign in the box', ok:'Thank you. Your acknowledgement has been submitted.', fail:'Could not submit. Please try again.' },
-  ta: { email:'சரியான மின்னஞ்சலை உள்ளிடவும்', name:'உங்கள் பெயரை உள்ளிடவும்', pos:'உங்கள் பதவியை உள்ளிடவும்', agree:'"நான் ஒப்புக்கொள்கிறேன்" என்பதைத் தேர்வு செய்யவும்', sig:'பெட்டியில் கையொப்பமிடவும்', ok:'நன்றி. உங்கள் உறுதிமொழி சமர்ப்பிக்கப்பட்டது.', fail:'சமர்ப்பிக்க இயலவில்லை. மீண்டும் முயற்சிக்கவும்.' }
+  en: { email:'Please enter a valid email', name:'Please enter your name', pos:'Please enter your position and unit', agree:'Please tick "I Agree"', sig:'Please sign in the box', fail:'Could not submit. Please try again.' },
+  ta: { email:'சரியான மின்னஞ்சலை உள்ளிடவும்', name:'உங்கள் பெயரை உள்ளிடவும்', pos:'உங்கள் பதவி மற்றும் பிரிவைக் குறிப்பிடவும்', agree:'"நான் ஒப்புக்கொள்கிறேன்" என்பதைத் தேர்வு செய்யவும்', sig:'பெட்டியில் கையொப்பமிடவும்', fail:'சமர்ப்பிக்க இயலவில்லை. மீண்டும் முயற்சிக்கவும்.' }
 };
 function setLang(l) {
   lang = l;
@@ -214,6 +335,8 @@ function setLang(l) {
   document.documentElement.lang = l === 'ta' ? 'ta' : 'en';
   document.getElementById('bEn').className = l === 'en' ? 'on' : '';
   document.getElementById('bTa').className = l === 'ta' ? 'on' : '';
+  document.querySelectorAll('[data-ph-en]').forEach(function (el) { el.placeholder = el.getAttribute('data-ph-' + l); });
+  setTimeout(sizeCanvas, 0);
 }
 
 /* signature pad */
@@ -234,6 +357,7 @@ cv.addEventListener('pointermove', function (e) { if (!drawing) return; var p = 
 ['pointerup', 'pointercancel'].forEach(function (n) { cv.addEventListener(n, function () { drawing = false; }); });
 document.getElementById('clr').onclick = function () { inked = false; sizeCanvas(); };
 window.addEventListener('resize', sizeCanvas);
+setLang('en');
 sizeCanvas();
 
 function show(cls, text) { var m = document.getElementById('msg'); m.className = cls; m.textContent = text; }
@@ -241,8 +365,8 @@ function show(cls, text) { var m = document.getElementById('msg'); m.className =
 document.getElementById('go').onclick = function () {
   var t = T[lang], btn = this;
   var email = document.getElementById('email').value.trim(), name = document.getElementById('name').value.trim(), pos = document.getElementById('pos').value.trim();
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return show('err', t.email);
   if (!name) return show('err', t.name);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return show('err', t.email);
   if (!pos) return show('err', t.pos);
   if (!document.getElementById('agree').checked) return show('err', t.agree);
   if (!inked) return show('err', t.sig);
@@ -250,6 +374,7 @@ document.getElementById('go').onclick = function () {
   var device = [navigator.platform, navigator.deviceMemory ? navigator.deviceMemory + 'GB RAM' : '', navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' cores' : '',
                 screen.width + 'x' + screen.height, navigator.language || '', (Intl.DateTimeFormat().resolvedOptions().timeZone || '')].filter(Boolean).join(' | ');
   btn.disabled = true;
+  show('', '');
   getIp().then(function (ip) {
     // text/plain avoids a CORS preflight, which Apps Script web apps do not answer
     return fetch(SCRIPT_URL, {
@@ -258,8 +383,12 @@ document.getElementById('go').onclick = function () {
                              signature: cv.toDataURL('image/png'), device: device, browser: navigator.userAgent, ip: ip })
     });
   }).then(function (r) { return r.json(); }).then(function (j) {
-    if (j.ok) { show('ok', t.ok); document.getElementById('f').querySelectorAll('input,button').forEach(function (x) { x.disabled = true; }); }
-    else { show('err', j.error || t.fail); btn.disabled = false; }
+    if (j.ok) {
+      document.getElementById('f').style.display = 'none';
+      document.getElementById('readCard').style.display = 'none';
+      document.getElementById('done').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else { show('err', j.error || t.fail); btn.disabled = false; }
   }).catch(function () { show('err', t.fail); btn.disabled = false; });
 };
 </script>
